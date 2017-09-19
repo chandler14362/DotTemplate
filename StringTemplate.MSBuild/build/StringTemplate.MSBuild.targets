@@ -1,0 +1,23 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <UsingTask TaskName="StringTemplateTask" AssemblyFile="$(MSBuildThisFileDirectory)StringTemplate.MSBuild.dll" />
+
+    <ItemGroup>
+        <AvailableItemName Include="TemplateFiles" />
+    </ItemGroup>
+
+    <Target Name="_ResolveTemplateFiles">
+        <ItemGroup>
+            <TemplateFile Condition=" '@(TemplateFile)' == '' and '%(Extension)' == '.stg' " Include="@(Content);@(None)" />
+            <TemplateFile Condition=" '@(TemplateFile)' == '' " Include="**\*.stg" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="RenderTemplateFiles" DependsOnTargets="_ResolveTemplateFiles" BeforeTargets="Build">
+        <StringTemplateTask TemplateFiles="@(TemplateFile)">
+            <Output TaskParameter="CompileFiles" ItemName="CompileFiles" />
+        </StringTemplateTask>
+        <ItemGroup>
+            <Compile Include="@(CompileFiles)" />
+        </ItemGroup>
+    </Target>
+</Project>
