@@ -2,19 +2,32 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <RootNamespace>StringTemplate.MSBuild</RootNamespace>
-    <Version>1.0.0</Version>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+
+    <PackageId>StringTemplate.MSBuild</PackageId>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <Authors>Chandler Stowell</Authors>
+    <Description>MSBuild task that renders StringTemplate4 templates before compilation.</Description>
+    <RepositoryUrl>https://github.com/chandler14362/StringTemplate.MSBuild.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/chandler14362/StringTemplate.MSBuild</PackageProjectUrl>
+    <PackageTags>msbuild;codegeneration;codegen;template;stringtemplate;task</PackageTags>
+    
+    <PackageLicenseUrl>https://github.com/chandler14362/StringTemplate.MSBuild/blob/master/LICENSE</PackageLicenseUrl>
+    <copyright>Copyright 2017</copyright>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Include="build\*" Pack="true" />
-    <Content Include="$(OutputPath)*.dll;$(OutputPath)*.pdb" Pack="true" PackagePath="build/" />
-  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.548" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.548" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\antlrcs\Antlr4.StringTemplate\Antlr4.StringTemplate.csproj" />
     <ProjectReference Include="..\antlrcs\Runtime\Antlr3.Runtime\Antlr3.Runtime.csproj" />
+    
+    <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+    <ProjectReference Update="@(ProjectReference)" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="build\*" Pack="true" PackagePath="build/" />
+    <Content Include="$(OutputPath)*.dll;$(OutputPath)*.pdb" Pack="true" PackagePath="build/" />
   </ItemGroup>
 </Project>
