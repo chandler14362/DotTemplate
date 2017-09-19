@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Text;
 using Antlr4.StringTemplate;
@@ -55,7 +54,7 @@ namespace StringTemplate.MSBuild
         public bool TryRenderTemplate(string templatePath, out string content)
         {
             var uri = new Uri(templatePath, UriKind.Absolute);
-            var group = new TemplateGroupFile(uri, Encoding.Default, '<', '>');
+            var group = new TemplateGroupFile(uri, Encoding.ASCII, '<', '>');
 
             var render = group.GetInstanceOf("render");
             if (render == null)
